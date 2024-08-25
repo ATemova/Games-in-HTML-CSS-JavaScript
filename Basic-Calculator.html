@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #calc-display {
+            width: 200px;
+            margin-bottom: 10px;
+            text-align: right;
+            font-size: 24px;
+        }
+        #calc-buttons button {
+            font-size: 18px;
+            width: 50px;
+            height: 50px;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Basic Calculator</h2>
+    <input type="text" id="calc-display" disabled />
+    <div id="calc-buttons">
+        <button onclick="appendCalcNumber('1')">1</button>
+        <button onclick="appendCalcNumber('2')">2</button>
+        <button onclick="appendCalcNumber('3')">3</button>
+        <button onclick="appendCalcNumber('4')">4</button>
+        <button onclick="appendCalcNumber('5')">5</button>
+        <button onclick="appendCalcNumber('6')">6</button>
+        <button onclick="appendCalcNumber('7')">7</button>
+        <button onclick="appendCalcNumber('8')">8</button>
+        <button onclick="appendCalcNumber('9')">9</button>
+        <button onclick="appendCalcNumber('0')">0</button>
+        <button onclick="appendCalcNumber('+')">+</button>
+        <button onclick="appendCalcNumber('-')">-</button>
+        <button onclick="appendCalcNumber('*')">*</button>
+        <button onclick="appendCalcNumber('/')">/</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="clearCalc()">C</button>
+    </div>
+
+    <script>
+        const display = document.getElementById('calc-display');
+        let currentInput = '';
+
+        function appendCalcNumber(num) {
+            currentInput += num;
+            display.value = currentInput;
+        }
+
+        function calculate() {
+            try {
+                display.value = eval(currentInput);
+                currentInput = display.value;
+            } catch {
+                display.value = 'Error';
+            }
+        }
+
+        function clearCalc() {
+            currentInput = '';
+            display.value = '';
+        }
+    </script>
+</body>
+</html>
