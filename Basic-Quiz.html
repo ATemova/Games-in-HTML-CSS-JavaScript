@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #quiz-result {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Basic Quiz</h2>
+    <div id="quiz-question">What is 2 + 2?</div>
+    <button onclick="checkAnswer(3)">3</button>
+    <button onclick="checkAnswer(4)">4</button>
+    <button onclick="checkAnswer(5)">5</button>
+    <div id="quiz-result"></div>
+
+    <script>
+        function checkAnswer(answer) {
+            const correctAnswer = 4;
+            const result = document.getElementById('quiz-result');
+            if (answer === correctAnswer) {
+                result.textContent = 'Correct!';
+            } else {
+                result.textContent = 'Wrong answer, try again!';
+            }
+        }
+    </script>
+</body>
+</html>
