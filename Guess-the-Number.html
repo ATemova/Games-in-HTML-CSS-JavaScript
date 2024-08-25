@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #guess-result {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Guess the Number</h2>
+    <input type="number" id="guess" placeholder="Enter a number" />
+    <button onclick="guessNumber()">Guess</button>
+    <div id="guess-result"></div>
+
+    <script>
+        const targetNumber = Math.floor(Math.random() * 100) + 1;
+
+        function guessNumber() {
+            const guess = parseInt(document.getElementById('guess').value);
+            const result = document.getElementById('guess-result');
+            if (guess === targetNumber) {
+                result.textContent = 'Congratulations! You guessed correctly!';
+            } else if (guess < targetNumber) {
+                result.textContent = 'Too low! Try again.';
+            } else {
+                result.textContent = 'Too high! Try again.';
+            }
+        }
+    </script>
+</body>
+</html>
