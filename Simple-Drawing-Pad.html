@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Drawing Pad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        canvas {
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h2>Simple Drawing Pad</h2>
+    <canvas id="drawing-pad" width="200" height="200"></canvas>
+    <button onclick="clearCanvas()">Clear</button>
+
+    <script>
+        const canvas = document.getElementById('drawing-pad');
+        const context = canvas.getContext('2d');
+        let drawing = false;
+
+        canvas.addEventListener('mousedown', () => drawing = true);
+        canvas.addEventListener('mouseup', () => drawing = false);
+        canvas.addEventListener('mousemove', draw);
+
+        function draw(e) {
+            if (!drawing) return;
+            context.lineWidth = 2;
+            context.lineCap = 'round';
+            context.strokeStyle = 'black';
+
+            context.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            context.stroke();
+            context.beginPath();
+            context.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        }
+
+        function clearCanvas() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</body>
+</html>
