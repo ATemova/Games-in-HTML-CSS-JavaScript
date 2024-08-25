@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #tic-tac-toe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+            justify-content: center;
+        }
+        #tic-tac-toe-board div {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        #tic-tac-toe-result {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Tic Tac Toe</h2>
+    <div id="tic-tac-toe-board">
+        <div></div><div></div><div></div>
+        <div></div><div></div><div></div>
+        <div></div><div></div><div></div>
+    </div>
+    <button onclick="resetTicTacToe()">Reset</button>
+    <div id="tic-tac-toe-result"></div>
+
+    <script>
+        const ticTacToeBoard = document.getElementById('tic-tac-toe-board');
+        const ticTacToeResult = document.getElementById('tic-tac-toe-result');
+        let currentPlayer = 'X';
+        let board = ['', '', '', '', '', '', '', '', ''];
+
+        ticTacToeBoard.addEventListener('click', (e) => {
+            const index = Array.from(ticTacToeBoard.children).indexOf(e.target);
+            if (board[index] === '' && e.target.tagName === 'DIV') {
+                board[index] = currentPlayer;
+                e.target.textContent = currentPlayer;
+                if (checkWinner()) {
+                    ticTacToeResult.textContent = `Player ${currentPlayer} wins!`;
+                    return;
+                }
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+        });
+
+        function checkWinner() {
+            const winningCombination = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+            return winningCombination.some(combo => 
+                combo.every(index => board[index] === currentPlayer)
+            );
+        }
+
+        function resetTicTacToe() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            ticTacToeBoard.childNodes.forEach(cell => cell.textContent = '');
+            ticTacToeResult.textContent = '';
+            currentPlayer = 'X';
+        }
+    </script>
+</body>
+</html>
