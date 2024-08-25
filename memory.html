@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Memory Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        button { margin: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Number Memory Game</h1>
+    <p id="number"></p>
+    <button onclick="startGame()">Start Game</button>
+    <input type="number" id="guessInput" placeholder="Enter the number">
+    <button onclick="checkGuess()">Submit Guess</button>
+    <p id="result"></p>
+
+    <script>
+        let numberToRemember;
+
+        function startGame() {
+            numberToRemember = Math.floor(Math.random() * 10000);
+            document.getElementById('number').textContent = `Memorize this number: ${numberToRemember}`;
+            setTimeout(() => {
+                document.getElementById('number').textContent = '';
+            }, 5000); // Hide number after 5 seconds
+        }
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guessInput').value);
+            const result = document.getElementById('result');
+
+            if (guess === numberToRemember) {
+                result.textContent = 'Correct! You remembered the number.';
+            } else {
+                result.textContent = `Incorrect. The number was ${numberToRemember}.`;
+            }
+        }
+    </script>
+</body>
+</html>
