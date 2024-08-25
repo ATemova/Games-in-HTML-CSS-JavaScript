@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falling Blocks Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #gameCanvas { border: 1px solid #000; background-color: #eee; }
+    </style>
+</head>
+<body>
+    <h1>Falling Blocks Game</h1>
+    <canvas id="gameCanvas" width="200" height="400"></canvas>
+    <p id="score">Score: 0</p>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const blockSize = 20;
+        const columns = canvas.width / blockSize;
+        const rows = canvas.height / blockSize;
+        let blocks = [];
+        let score = 0;
+        let interval;
+
+        function drawBlocks() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'blue';
+            blocks.forEach(block => {
+                ctx.fillRect(block.x * blockSize, block.y * blockSize, blockSize, blockSize);
+            });
+        }
+
+        function updateBlocks() {
+            blocks.forEach(block => block.y++);
+            blocks = blocks.filter(block => block.y < rows);
+            if (Math.random() < 0.1) {
+                blocks.push({ x: Math.floor(Math.random() * columns), y: 0 });
+            }
+        }
+
+        function checkCollision() {
+            blocks.forEach(block => {
+                if (block.y >= rows - 1) {
+                    clearInterval(interval);
+                    document.getElementById('score').textContent = `Game Over! Final Score: ${score}`;
+                }
+            });
+        }
+
+        function gameLoop() {
+            updateBlocks();
+            drawBlocks();
+            checkCollision();
+            score++;
+            document.getElementById('score').textContent = `Score: ${score}`;
+        }
+
+        interval = setInterval(gameLoop, 500);
+    </script>
+</body>
+</html>
