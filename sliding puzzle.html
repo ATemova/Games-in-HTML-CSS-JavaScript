@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliding Puzzle</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .puzzle { display: grid; grid-template-columns: repeat(3, 100px); gap: 5px; justify-content: center; }
+        .puzzle div { width: 100px; height: 100px; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; }
+        .empty { background-color: #fff; }
+    </style>
+</head>
+<body>
+    <h1>Sliding Puzzle (3x3)</h1>
+    <div class="puzzle" id="puzzle"></div>
+    <button onclick="shuffle()">Shuffle</button>
+    <p id="status"></p>
+
+    <script>
+        const size = 3;
+        let puzzle = Array.from({ length: size * size }, (_, i) => i + 1);
+        puzzle[size * size - 1] = 0;
+
+        function createPuzzle() {
+            const puzzleElement = document.getElementById('puzzle');
+            puzzleElement.innerHTML = '';
+            puzzle.forEach((value, index) => {
+                const tile = document.createElement('div');
+                if (value === 0) {
+                    tile.className = 'empty';
+                } else {
+                    tile.textContent = value;
+                    tile.addEventListener('click', () => moveTile(index));
+                }
+                puzzleElement.appendChild(tile);
+            });
+        }
+
+        function moveTile(index) {
+            const emptyIndex = puzzle.indexOf(0);
+            const [row, col] = [Math.floor(index / size), index % size];
+            const [emptyRow, emptyCol] = [Math.floor(emptyIndex / size), emptyIndex % size];
+            const isAdjacent = (Math.abs(row - emptyRow) === 1 && col === emptyCol) || (Math.abs(col - emptyCol) === 1 && row === emptyRow);
+            
+            if (isAdjacent) {
+                puzzle[emptyIndex] = puzzle[index];
+                puzzle[index] = 0;
+                createPuzzle();
+                checkWin();
+            }
+        }
+
+        function checkWin() {
+            if (puzzle.every((value, index) => value === (index + 1) % (size * size))) {
+                document.getElementById('status').textContent = 'Congratulations, you solved the puzzle!';
+            }
+        }
+
+        function shuffle() {
+            for (let i = puzzle.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [puzzle[i], puzzle[j]] = [puzzle[j], puzzle[i]];
+            }
+            createPuzzle();
+        }
+
+        createPuzzle();
+    </script>
+</body>
+</html>
