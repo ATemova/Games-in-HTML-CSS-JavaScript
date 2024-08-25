@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Word</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        input { margin: 5px; padding: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Guess the Word</h1>
+    <p id="word"></p>
+    <input type="text" id="letterInput" maxlength="1" placeholder="Guess a letter">
+    <button onclick="guessLetter()">Guess</button>
+    <p id="message"></p>
+
+    <script>
+        const wordToGuess = 'javascript';
+        let guessedWord = Array(wordToGuess.length).fill('_');
+
+        function updateWordDisplay() {
+            document.getElementById('word').textContent = guessedWord.join(' ');
+        }
+
+        function guessLetter() {
+            const letter = document.getElementById('letterInput').value.toLowerCase();
+            if (letter.length !== 1 || !/^[a-z]$/.test(letter)) {
+                document.getElementById('message').textContent = 'Please enter a single letter.';
+                return;
+            }
+
+            let correctGuess = false;
+            for (let i = 0; i < wordToGuess.length; i++) {
+                if (wordToGuess[i] === letter) {
+                    guessedWord[i] = letter;
+                    correctGuess = true;
+                }
+            }
+
+            if (!correctGuess) {
+                document.getElementById('message').textContent = 'Incorrect guess!';
+            } else {
+                document.getElementById('message').textContent = 'Good guess!';
+            }
+
+            updateWordDisplay();
+
+            if (!guessedWord.includes('_')) {
+                document.getElementById('message').textContent = 'Congratulations! You guessed the word!';
+            }
+        }
+
+        updateWordDisplay();
+    </script>
+</body>
+</html>
