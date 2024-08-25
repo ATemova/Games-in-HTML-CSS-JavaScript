@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        input { margin: 10px; padding: 5px; width: 60px; }
+        button { padding: 5px 10px; }
+        #timer { font-size: 24px; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Countdown Timer</h1>
+    <p>Enter time (in seconds):</p>
+    <input type="number" id="timeInput" min="1" />
+    <button onclick="startTimer()">Start Timer</button>
+    <p id="timer">00:00</p>
+
+    <script>
+        let timer;
+        function startTimer() {
+            const timeInput = document.getElementById('timeInput').value;
+            let time = parseInt(timeInput, 10);
+
+            if (isNaN(time) || time <= 0) {
+                alert('Please enter a valid number greater than 0.');
+                return;
+            }
+
+            clearInterval(timer);
+            const timerDisplay = document.getElementById('timer');
+
+            function updateTimer() {
+                if (time <= 0) {
+                    clearInterval(timer);
+                    timerDisplay.textContent = 'Time\'s up!';
+                    return;
+                }
+
+                const minutes = Math.floor(time / 60);
+                const seconds = time % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                time--;
+            }
+
+            updateTimer(); // Update immediately
+            timer = setInterval(updateTimer, 1000);
+        }
+    </script>
+</body>
+</html>
