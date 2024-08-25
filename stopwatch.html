@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Stopwatch</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        button { margin: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Simple Stopwatch</h1>
+    <button onclick="startStopwatch()">Start</button>
+    <button onclick="stopStopwatch()">Stop</button>
+    <p id="time">0 seconds</p>
+
+    <script>
+        let stopwatchInterval;
+        let seconds = 0;
+
+        function startStopwatch() {
+            stopwatchInterval = setInterval(() => {
+                seconds++;
+                document.getElementById('time').textContent = `${seconds} seconds`;
+            }, 1000);
+        }
+
+        function stopStopwatch() {
+            clearInterval(stopwatchInterval);
+        }
+    </script>
+</body>
+</html>
