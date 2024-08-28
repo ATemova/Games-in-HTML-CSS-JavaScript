@@ -66,4 +66,30 @@
 
             for (const [dx, dy] of directions) {
                 let count = 1;
-   
+                for (let i = 1; i < 4; i++) {
+                    const newRow = row + dx * i;
+                    const newCol = col + dy * i;
+                    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns && board[newRow][newCol] === player) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                for (let i = 1; i < 4; i++) {
+                    const newRow = row - dx * i;
+                    const newCol = col - dy * i;
+                    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < columns && board[newRow][newCol] === player) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                if (count >= 4) return true;
+            }
+            return false;
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>
