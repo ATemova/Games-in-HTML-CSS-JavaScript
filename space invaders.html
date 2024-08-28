@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <style>
+        canvas { border: 1px solid #000; display: block; margin: 0 auto; background: #000; }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="600" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const shipWidth = 50;
+        const shipHeight = 20;
+        const bulletWidth = 5;
+        const bulletHeight = 20;
+        const invaderWidth = 40;
+        const invaderHeight = 20;
+        const shipSpeed = 5;
+        const bulletSpeed = 5;
+        const invaderSpeed = 1;
+        const rowCount = 3;
+        const columnCount = 5;
+
+        let ship = { x: canvas.width / 2 - shipWidth / 2, y: canvas.height - shipHeight - 10, width: shipWidth, height: shipHeight };
+        let bullets = [];
+        let invaders = [];
+        let invaderDirection = 1;
+
+        function createInvaders() {
+            for (let r = 0; r < rowCount; r++) {
+                for (let c = 0; c < columnCount; c++) {
+                    invaders.push({ x: c * (invaderWidth + 10) + 30, y: r * (invaderHeight + 10) + 30, width: invaderWidth, height: invaderHeight });
+                }
+            }
+        }
+
+        function drawShip() {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(ship.x, ship.y, ship.width, ship.height);
+        }
+
+        function drawBullets() {
+            ctx.fillStyle = 'red';
+            bullets.forEach(bullet => ctx.fillRect(bullet.x, bullet.y, bulletWidth, bulletHeight));
+        }
+
+        function drawInvaders() {
+            ctx.fillStyle = 'green';
+            invaders.forEach(invader => ctx.fillRect(invader.x, invader.y, invader.width, invader.height));
+        }
+
+        function moveShip(direction) {
+            if (direction === 'left' && ship.x > 0) {
+                ship.x -= shipSpeed;
+            } else if (direction === 'right' && ship.x < canvas.width - ship.width) {
+                ship.x += shipSpeed;
+            }
+        }
+
+        function fireBullet() {
+            bullets.push({ x: ship.x + ship.width / 2 - bulletWidth / 2, y: ship.y });
+        }
+
+        function moveBullets() {
+            bullets = bullets.map(bullet => ({ ...bullet, y: bullet.y - bulletSpeed }));
+            bullets = bullets.filter(bullet => bullet.y > 0);
+        }
+
+        function moveInvaders() {
+            invaders.forEach(invader => invader.x += invaderDirection);
+            const edgeInvader = invaders[invaders.length - 1];
+            if (edgeInvader.x + invaderWidth > canvas.width || invaders[0].x < 0) {
+                invaderDirection *= -1;
+                invaders.forEach(invader => invader.y += invaderHeight);
+            }
+        }
+
+        function collisionDetection() {
+            bullets.forEach(bullet => {
+                invaders.forEach((invader, index) => {
+                    if (
+                        bullet.x < invader.x + invader.width &&
+                        bullet.x + bulletWidth > invader.x &&
+                        bullet.y < invader.y + invader.height &&
+                        bullet.y + bulletHeight > invader.y
+                    ) {
+                        invaders.splice(index, 1);
+                        bullets.splice(bullets.indexOf(bullet), 1);
+                    }
+                });
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawShip();
+            drawBullets();
+            drawInvaders();
+            moveBullets();
+            moveInvaders();
+            collisionDetection();
+            requestAnimationFrame(draw);
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft') {
+                moveShip('left');
+            } else if (e.key === 'ArrowRight') {
+                moveShip('right');
+            } else if (e.key === ' ') {
+                fireBullet();
+            }
+        });
+
+        createInvaders();
+        draw();
+    </script>
+</body>
+</html>
