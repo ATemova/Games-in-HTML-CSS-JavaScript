@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack-a-Mole</title>
+    <style>
+        .board { display: grid; grid-template-columns: repeat(3, 100px); grid-gap: 5px; }
+        .cell { width: 100px; height: 100px; background: #ddd; cursor: pointer; position: relative; }
+        .mole { width: 50px; height: 50px; background: brown; border-radius: 50%; position: absolute; top: 25px; left: 25px; }
+    </style>
+</head>
+<body>
+    <div class="board" id="board"></div>
+    <p>Score: <span id="score">0</span></p>
+    <script>
+        const board = document.getElementById('board');
+        const scoreDisplay = document.getElementById('score');
+        let score = 0;
+        let moleTimeout;
+
+        function createBoard() {
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.addEventListener('click', handleCellClick);
+                board.appendChild(cell);
+            }
+            showMole();
+        }
+
+        function handleCellClick(event) {
+            if (event.target.classList.contains('mole')) {
+                score++;
+                scoreDisplay.textContent = score;
+                hideMole();
+                showMole();
+            }
+        }
+
+        function showMole() {
+            const cells = board.querySelectorAll('.cell');
+            const randomCell = cells[Math.floor(Math.random() * cells.length)];
+            const mole = document.createElement('div');
+            mole.className = 'mole';
+            randomCell.appendChild(mole);
+            moleTimeout = setTimeout(hideMole, 1000);
+        }
+
+        function hideMole() {
+            const moles = document.querySelectorAll('.mole');
+            moles.forEach(mole => mole.parentElement.removeChild(mole));
+            clearTimeout(moleTimeout);
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>
