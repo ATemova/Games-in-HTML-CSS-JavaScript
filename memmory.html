@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        .board { display: grid; grid-template-columns: repeat(4, 100px); grid-gap: 10px; }
+        .card { width: 100px; height: 100px; background: #ddd; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 2em; }
+        .flipped { background: #fff; }
+    </style>
+</head>
+<body>
+    <div class="board" id="board"></div>
+    <script>
+        const board = document.getElementById('board');
+        const symbols = ['🍎', '🍌', '🍒', '🍇', '🍓', '🍉', '🍍', '🥥'];
+        let cards = [...symbols, ...symbols];
+        let flippedCards = [];
+        let matchedCards = [];
+        let lockBoard = false;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function createBoard() {
+            shuffle(cards);
+            board.innerHTML = '';
+            cards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.symbol = symbol;
+                card.dataset.index = index;
+                card.addEventListener('click', handleCardClick);
+                board.appendChild(card);
+            });
+        }
+
+        function handleCardClick(event) {
+            if (lockBoard || event.target.classList.contains('flipped')) return;
+            const card = event.target;
+            card.textContent = card.dataset.symbol;
+            card.classList.add('flipped');
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                lockBoard = true;
+                checkForMatch();
+            }
+        }
+
+        function checkForMatch() {
+            const [firstCard, secondCard] = flippedCards;
+            if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+                matchedCards.push(firstCard, secondCard);
+                resetBoard();
+            } else {
+                setTimeout(() => {
+                    firstCard.textContent = '';
+                    secondCard.textContent = '';
+                    firstCard.classList.remove('flipped');
+                    secondCard.classList.remove('flipped');
+                    resetBoard();
+                }, 1000);
+            }
+        }
+
+        function resetBoard() {
+            flippedCards = [];
+            lockBoard = false;
+            if (matchedCards.length === cards.length) {
+                setTimeout(() => alert('You Win!'), 100);
+            }
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>
