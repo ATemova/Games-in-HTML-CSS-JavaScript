@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048</title>
+    <style>
+        .board { display: grid; grid-template-columns: repeat(4, 100px); grid-gap: 10px; }
+        .cell { width: 100px; height: 100px; background: #ccc; display: flex; align-items: center; justify-content: center; font-size: 2em; }
+    </style>
+</head>
+<body>
+    <div class="board" id="board"></div>
+    <script>
+        const boardElement = document.getElementById('board');
+        const size = 4;
+        let board = Array.from({ length: size }, () => Array(size).fill(0));
+
+        function createBoard() {
+            boardElement.innerHTML = '';
+            board.forEach(row => {
+                row.forEach(cell => {
+                    const cellElement = document.createElement('div');
+                    cellElement.className = 'cell';
+                    cellElement.textContent = cell || '';
+                    boardElement.appendChild(cellElement);
+                });
+            });
+        }
+
+        function handleKey(e) {
+            switch (e.key) {
+                case 'ArrowLeft':
+                    moveLeft();
+                    break;
+                case 'ArrowRight':
+                    moveRight();
+                    break;
+                case 'ArrowUp':
+                    moveUp();
+                    break;
+                case 'ArrowDown':
+                    moveDown();
+                    break;
+            }
+            createBoard();
+        }
+
+        function moveLeft() {
+            // Implement move left logic
+        }
+
+        function moveRight() {
+            // Implement move right logic
+        }
+
+        function moveUp() {
+            // Implement move up logic
+        }
+
+        function moveDown() {
+            // Implement move down logic
+        }
+
+        document.addEventListener('keydown', handleKey);
+        createBoard();
+    </script>
+</body>
+</html>
