@@ -1,2 +1,7 @@
 # Games in HTML, CSS and JavaScript
-Unpublished games in HTML, CSS and JavaScript
+### Unpublished games in HTML, CSS and JavaScript
+**HTML** (HyperText Markup Language) is the foundational language of the web, used to structure content on the internet. HTML provides the basic building blocks for web pages, using elements and tags to define headings, paragraphs, links, images, and other content. Its primary role is to organize and present data in a web browser, ensuring that content is displayed correctly and accessibly. HTML is essential for creating web pages, and its structure is complemented by CSS and JavaScript to enhance and enrich web experiences.
+
+**CSS** (Cascading Style Sheets) is a stylesheet language used to control the presentation and layout of HTML elements on a web page. CSS allows developers to apply styles such as colors, fonts, spacing, and positioning, separating the visual design from the content structure. By defining styles in CSS, web developers can create responsive and visually appealing designs that adapt to different devices and screen sizes. CSS enables a consistent look and feel across web pages, enhancing user experience and design flexibility.
+
+**JavaScript** is a versatile programming language that adds interactivity and dynamic behavior to web pages. It enables developers to create responsive and interactive features such as form validation, animations, and real-time updates. JavaScript runs in the browser, allowing for client-side scripting that enhances user engagement without requiring server-side processing for every interaction. With its extensive libraries and frameworks, JavaScript is crucial for modern web development, enabling the creation of complex applications and seamless user experiences.
