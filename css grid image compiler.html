@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #222;
+            margin: 0;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 10px;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <img src="https://via.placeholder.com/100" alt="Image 1">
+        <img src="https://via.placeholder.com/100" alt="Image 2">
+        <img src="https://via.placeholder.com/100" alt="Image 3">
+        <img src="https://via.placeholder.com/100" alt="Image 4">
+        <img src="https://via.placeholder.com/100" alt="Image 5">
+        <img src="https://via.placeholder.com/100" alt="Image 6">
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <img id="lightboxImage">
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+
+        document.querySelectorAll('.gallery img').forEach(image => {
+            image.addEventListener('click', function() {
+                lightbox.style.display = 'flex';
+                lightboxImage.src = this.src;
+            });
+        });
+
+        lightbox.addEventListener('click', function() {
+            lightbox.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
